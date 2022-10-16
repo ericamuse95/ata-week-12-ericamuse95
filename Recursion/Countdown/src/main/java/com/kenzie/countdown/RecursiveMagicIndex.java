@@ -12,7 +12,23 @@ public class RecursiveMagicIndex {
      * @return - this is the magic index, (-1) will be returned if one cannot be found
      */
     public static int magicIndex(List<Integer> list) {
-        //PARTICIPANTS: replace this placeholder line with your implementation
-        return -1;
+        return magicIndex(list, 0, list.size()-1);
     }
+    public static int magicIndex(List<Integer> list, int start, int end) {
+        if(start > end || start < 0 || end >= list.size()){
+            return -1;
+        }
+
+        int mid = (start + end) / 2;
+
+        if(list.get(mid) == mid){
+            return mid;
+        }
+
+        if(list.get(mid)< mid) {
+            return magicIndex(list, mid + 1, end);
+        }
+        return magicIndex(list,start,mid -1 );
+    }
+
 }
