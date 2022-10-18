@@ -10,7 +10,7 @@ public class RecursiveCountDownTest {
     private RecursiveCountDown recursiveCountDown;
 
     @BeforeEach
-    private void setup() {
+    public void setup() {
         recursiveCountDown = new RecursiveCountDown();    
     }
 

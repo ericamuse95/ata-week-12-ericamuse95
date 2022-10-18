@@ -103,8 +103,15 @@ public class LinkedList {
      * @return The sum of all elements in the list
      */
     public Double sum() {
-        // TODO: calculate the sum of this LinkedList
-        throw new UnsupportedOperationException();
+        //  calculate the sum of this LinkedList
+        return sum(head);
+    }
+
+    private Double sum(Node head) {
+        if (head == null) {
+            return 0.0;
+        }
+        return head.getData() + sum(head.getNext());
     }
 
     /**
@@ -113,8 +120,18 @@ public class LinkedList {
      * @return a new reverse order list
      */
     public LinkedList reverse() {
-        // TODO: create the reversed LinkedList
-        throw new UnsupportedOperationException();
+        //  create the reversed LinkedList
+        LinkedList reversed = new LinkedList();
+        reverse(head, reversed);
+        return reversed;
+    }
+
+    private void reverse(Node head, LinkedList reversed) {
+        if (head == null) {
+            return;
+        }
+        reversed.addFirst(head.getData());
+        reverse(head.getNext(), reversed);
     }
 
     /**
@@ -123,8 +140,16 @@ public class LinkedList {
      * @return size of the linked list
      */
     public int size() {
-        // TODO: calculate the size of a LinkedList
-        throw new UnsupportedOperationException();
+        //  calculate the size of a LinkedList
+        return size(head);
+
+    }
+
+    private int size(Node head) {
+        if (head == null) {
+            return 0;
+        }
+        return 1 + size(head.getNext());
     }
 
 
@@ -136,8 +161,20 @@ public class LinkedList {
      */
     public boolean contains(Double number) {
         // TODO: determine if a LinkedList contains a node equal to the number specified
-        throw new UnsupportedOperationException();
+        //throw new UnsupportedOperationException();
+        return contains(head, number);
     }
+    public boolean contains(Node node, Double number){
+        if(node != null){
+            if(node.getData().equals(number)) {
+                return true;
+            } else{
+                return contains(node.getNext(), number);
+            }
+        }
+        return false;
+    }
+
 
     /**
      * Computes and returns the max of all Double elements in the list.
@@ -145,20 +182,56 @@ public class LinkedList {
      */
     public Double max() {
         // TODO: determines the max of elements in the LinkedList
-        throw new UnsupportedOperationException();
+        //throw new UnsupportedOperationException();
+        if (head != null) {
+            return max(head);
+        }
+        return null;
+    }
+
+    public Double max(Node current) {
+        if (current.getNext() == null) {
+            return current.getData();
+        } else {
+            double maxOfRest = max(current.getNext());
+            if(current.getData() <= maxOfRest) {
+                return maxOfRest;
+            } else {
+                return current.getData();
+            }
+        }
     }
 
     // EXTENSION
     @Override
     public int hashCode() {
-        // TODO: update/override this method to be a recursive implementation
-        throw new UnsupportedOperationException();
+        // update/override this method to be a recursive implementation
+        return Objects.hash(head);
     }
 
     @Override
     public boolean equals(Object o) {
-        // TODO: update/override this method to be a recursive implementation
-        throw new UnsupportedOperationException();
+        // update/override this method to be a recursive implementation
+        if(this == o){
+            return true;
+        }
+        if(o == null || getClass() != o.getClass()){
+            return false;
+        }
+        LinkedList other = (LinkedList) o;
+        Node thisNode = this.head;
+        Node otherNode = other.head;
+        while (thisNode != null && otherNode != null){
+            if(!thisNode.getData().equals(otherNode.getData())){
+                return false;
+            }
+            thisNode = thisNode.getNext();
+            otherNode = otherNode.getNext();
+        }
+        if(thisNode == null && otherNode == null){
+            return true;
+        }
+        return false;
     }
 
     @Override

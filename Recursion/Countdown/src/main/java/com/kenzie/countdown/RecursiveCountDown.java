@@ -9,7 +9,11 @@ public class RecursiveCountDown {
      * @return - this is a String that has combined all the numbers from target down to 0.
      */
     public static String countDown(int target) {
-        //PARTICIPANTS: replace this placeholder line with your implementation
-        return Integer.toString(-1);
+        //base case
+        if(target == 0){
+            return Integer.toString(target);
+        }
+        return target + countDown(target - 1);
+        //return Integer.toString(-1);
     }
 }
