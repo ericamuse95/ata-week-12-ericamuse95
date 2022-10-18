@@ -165,14 +165,14 @@ public class LinkedList {
         return contains(head, number);
     }
     public boolean contains(Node node, Double number){
-        if(node == null){
-            return false;
+        if(node != null){
+            if(node.getData().equals(number)) {
+                return true;
+            } else{
+                return contains(node.getNext(), number);
+            }
         }
-        if(node.getData() == number) {
-            return true;
-        } else{
-            return contains(node.getNext(), number);
-        }
+        return false;
     }
 
 
@@ -183,34 +183,55 @@ public class LinkedList {
     public Double max() {
         // TODO: determines the max of elements in the LinkedList
         //throw new UnsupportedOperationException();
-        Node current = head;
-        Double max = 0.0;
+        if (head != null) {
+            return max(head);
+        }
+        return null;
+    }
 
-        if (head == null) {
-            return null;
+    public Double max(Node current) {
+        if (current.getNext() == null) {
+            return current.getData();
         } else {
-            while (current != null) {
-                if (max < current.getData()) {
-                    max = current.getData();
-                }
-                current = current.getNext();
+            double maxOfRest = max(current.getNext());
+            if(current.getData() <= maxOfRest) {
+                return maxOfRest;
+            } else {
+                return current.getData();
             }
-            return max();
         }
     }
 
     // EXTENSION
     @Override
     public int hashCode() {
-        // TODO: update/override this method to be a recursive implementation
-//        throw new UnsupportedOperationException();
-
+        // update/override this method to be a recursive implementation
+        return Objects.hash(head);
     }
 
     @Override
     public boolean equals(Object o) {
-        // TODO: update/override this method to be a recursive implementation
-        throw new UnsupportedOperationException();
+        // update/override this method to be a recursive implementation
+        if(this == o){
+            return true;
+        }
+        if(o == null || getClass() != o.getClass()){
+            return false;
+        }
+        LinkedList other = (LinkedList) o;
+        Node thisNode = this.head;
+        Node otherNode = other.head;
+        while (thisNode != null && otherNode != null){
+            if(!thisNode.getData().equals(otherNode.getData())){
+                return false;
+            }
+            thisNode = thisNode.getNext();
+            otherNode = otherNode.getNext();
+        }
+        if(thisNode == null && otherNode == null){
+            return true;
+        }
+        return false;
     }
 
     @Override
